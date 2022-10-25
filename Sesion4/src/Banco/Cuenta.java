@@ -2,6 +2,9 @@ package Banco;
 
 import java.util.List;
 
+import Banco.Movimiento.signo;
+
+
 public class Cuenta {
 	
 	private String numero;
@@ -35,9 +38,17 @@ public class Cuenta {
 	}
 	
 	public void ingreso(Double x) {
-		this.setSaldo(550.0);
+		Double ingreso = x + getSaldo();
+		this.setSaldo(ingreso);
+		Movimiento nuevo = new Movimiento(x,"Ingreso de" + x, signo.H);
+		Movimientos.add(nuevo);
 	}
 	public void reintegro(Double x) {
-		this.setSaldo(350.0);
+		if(this.getSaldo()==-500 || this.getSaldo()-x<=-500) {
+			
+		}
+		else {
+			
+		}
 	}
 }
