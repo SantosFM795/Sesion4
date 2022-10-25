@@ -1,9 +1,9 @@
 package Banco;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Banco.Movimiento.signo;
-
 
 public class Cuenta {
 	
@@ -16,6 +16,7 @@ public class Cuenta {
 		this.numero = numero;
 		this.titular = titular;
 		this.saldo = saldo;
+		this.Movimientos = new ArrayList<Movimiento>();
 	}
 	
 	public String getNumero() {
@@ -38,17 +39,18 @@ public class Cuenta {
 	}
 	
 	public void ingreso(Double x) {
-		Double ingreso = x + getSaldo();
-		this.setSaldo(ingreso);
-		Movimiento nuevo = new Movimiento(x,"Ingreso de" + x, signo.H);
+		this.setSaldo(x + this.getSaldo());
+		Movimiento nuevo = new Movimiento(x, "Ingreso de "+x, signo.H);
 		Movimientos.add(nuevo);
 	}
 	public void reintegro(Double x) {
-		if(this.getSaldo()==-500 || this.getSaldo()-x<=-500) {
-			
+		if(this.getSaldo()==-500.0 || this.getSaldo()-x<-500.0) {
+			System.out.println("Fondos insuficientes (saldo "+this.getSaldo()+") en la cuenta "+this.getNumero()+ " para el reintegro de "+x);
 		}
 		else {
-			
+			this.setSaldo(this.getSaldo()-x);
+			Movimiento nuevo = new Movimiento(x, "Reintegro de "+x, signo.D);
+			Movimientos.add(nuevo);
 		}
 	}
 }
